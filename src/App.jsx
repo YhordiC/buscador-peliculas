@@ -1,8 +1,11 @@
-
+import respontseMovies from './result-json/API.json'; 
+import withoutResults from './result-json/APIerror.json'
+import { Movie,renderNoResults } from './component/Movie';
 import './App.css'
 
 function App() {
-  
+  const movies =respontseMovies.Search;
+  const hasMovies = movies?.length > 0;  
 
   return (
     <div className='container-web'>
@@ -15,7 +18,12 @@ function App() {
     </header>
 
     <main>
-      Aqui iran las peliculas
+      {
+       hasMovies ?
+       (
+        <Movie movies={movies}/>
+       ) : <renderNoResults/>
+      }
     </main>
     </div>
   )
