@@ -1,11 +1,12 @@
-import respontseMovies from './result-json/API.json'; 
-import withoutResults from './result-json/APIerror.json'
-import { Movie,renderNoResults } from './component/Movie';
+
+import { Movies } from './component/Movie';
+import { useMovie } from './hooks/useMovie';
 import './App.css'
 
 function App() {
-  const movies =respontseMovies.Search;
-  const hasMovies = movies?.length > 0;  
+
+  const { movies:mappedMovies} = useMovie()
+  
 
   return (
     <div className='container-web'>
@@ -18,12 +19,7 @@ function App() {
     </header>
 
     <main>
-      {
-       hasMovies ?
-       (
-        <Movie movies={movies}/>
-       ) : <renderNoResults/>
-      }
+      <Movies movies={mappedMovies}/>
     </main>
     </div>
   )
