@@ -3,13 +3,13 @@ import { Movies } from './component/Movie';
 import { useSearch } from './hooks/useSearch';
 import { useMovie } from './hooks/useMovie';
 import './App.css'
-import {  useRef } from 'react';
+
 
 function App() {
 
-  const { movies:mappedMovies} = useMovie()
+  
   const {search,updateSearch,error} = useSearch()
-
+  const { movies,getMovies,loading} = useMovie(search)
   
 
 
@@ -21,7 +21,7 @@ function App() {
     event.preventDefault()
    // const value = inputRef.current.value;
    
-   console.log(search)
+   getMovies()
   }
 
   const handleChange = (event) => {
@@ -33,7 +33,7 @@ function App() {
 
   return (
     <div className='container-web'>
-    <h1>Hola Mundo</h1>
+    <h1>MoviesPlus</h1>
     <header>
       <form className='form' onSubmit={handleSubmit} >
         <input onChange={handleChange} value={search} name='search' placeholder='Avengers,Star Wars, The Matrix...'/>
@@ -43,7 +43,8 @@ function App() {
     </header>
 
     <main>
-      <Movies movies={mappedMovies}/>
+      {loading ? <p>Esta cargando</p>  : <Movies movies={movies}/>}
+      
     </main>
     </div>
   )

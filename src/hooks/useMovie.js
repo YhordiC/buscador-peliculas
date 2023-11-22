@@ -1,17 +1,28 @@
-import respontseMovies from '../result-json/API.json'; 
-// import withoutResults from '../result-json/APIerror.json'
-export const useMovie = () => {
-  
-    const movies =respontseMovies.Search;
+import { useState } from 'react';
+import { searchMovies } from '../services/movies';
 
-    const mappedMovies = movies?.map(movie => (
-      { id: movie.imdbID,
-        title:movie.Title,
-        year:movie.Year,
-        poster:movie.Poster,
-      }
-    ))
+
+export const  useMovie =  (search) => {
+
+    const [movies,setMovies] = useState([])
+    const [loading,setLoading] = useState(false)
+    const [error,setError] = useState(null)
+
+    const getMovies = async () => {
+    try{
+      setLoading(true)
+      setError(null)
+      const newMovies = await searchMovies(search)
+      setMovies(newMovies)
   
-    return { movies : mappedMovies}
-  
+    } catch (e){
+      setError(e.message)
+    } 
+    // tanto em try como en catch 
+    finally {
+      setLoading(false)
+    }
+      
+}
+  return { movies, getMovies,loading}
 }
