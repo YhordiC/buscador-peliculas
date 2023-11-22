@@ -1,7 +1,9 @@
 .container-web{
+  
   display: flex;
   flex-direction: column;
   align-items: center;
+
 }
 
 
@@ -17,19 +19,39 @@ main{
 }
 
 .movies{
+  margin-top: 40px;
+  padding: 0;
+
   list-style: none;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit , minmax(200px, 1fr));
   gap: 1rem;
   text-align: center;
+  
 }
 .movies h3, .movies p {
+  position: absolute;
   margin: 0;
+}
+.movies  li{
   
+  position: relative;
+}
+.movies li h3{
+left: 10px;
+right: 10px;
+  bottom: 40px;
 }
 
 .movies img {
-  margin: 10px 0;
+  margin: 1px 0;
   border-radius: 8px;
+  width: 220px;
+  height: 309px;
+}
+
+.movies li:hover{
+  transform: scale(1.05);
+  cursor: pointer;
 }
