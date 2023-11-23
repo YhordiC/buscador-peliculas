@@ -3,15 +3,22 @@ import { Movies } from './component/Movie';
 import { useSearch } from './hooks/useSearch';
 import { useMovie } from './hooks/useMovie';
 import './App.css'
-import { useState } from 'react';
-
+import { useCallback, useState } from 'react';
+import debounce from 'just-debounce-it';
 
 function App() {
 
   const [sort, setSort] = useState(false)
   const {search,updateSearch,error} = useSearch()
   const { movies,getMovies,loading} = useMovie({search,sort})
-    
+ 
+ 
+  const debouncedGetMovies = useCallback( debounce(search => {
+    console.log('sEARCH' + search)
+    getMovies({search})
+  },500) 
+  ,[getMovies]
+  )
 
 
   const handleSubmit = (event) => {
@@ -22,7 +29,7 @@ function App() {
     event.preventDefault()
    // const value = inputRef.current.value;
    
-   getMovies(search)
+   getMovies({search})
   }
   
   const handleSort = () => {
@@ -32,7 +39,9 @@ function App() {
   const handleChange = (event) => {
     const newQuery = event.target.value;
     if(newQuery.startsWith(' ')) return
-    updateSearch(event.target.value)
+    updateSearch(newQuery)
+debouncedGetMovies(newQuery)
+   // getMovies({search: newQuery})
   }
 
 
